@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}View Appointments{% endblock %}
+{% block content %}
+    <h2>Your Appointments</h2>
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                {{ appointment.time }} - {{ appointment.doctor.name }}
+                <form action="{{ url_for('cancel_appointment', appointment_id=appointment.id) }}" method="post">
+                    <input type="submit" value="Cancel Appointment">
+                </form>
+                <form action="{{ url_for('modify_appointment', appointment_id=appointment.id) }}" method="get">
+                    <input type="submit" value="Modify Appointment">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

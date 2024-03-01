@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %}Book Appointment{% endblock %}
+{% block content %}
+    <h2>Book an Appointment</h2>
+    <div>
+        {% for doctor in doctors %}
+            <div class="doctor-block">
+                <h3>{{ doctor.name }} - {{ doctor.specialization }}</h3>
+                <p><strong>Address:</strong> {{ doctor.address }}</p>
+                <form action="{{ url_for('book_appointment') }}" method="post">
+                    <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
+                    <label for="appointment_date">Select Date:</label>
+                    <input type="date" id="appointment_date" name="appointment_date" required>
+                    <label for="appointment_time">Select Time:</label>
+                    <input type="time" id="appointment_time" name="appointment_time" required>
+                    <input type="submit" value="Book Appointment">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

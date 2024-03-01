@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Appointments-Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        h1 {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal
+        }
+
+        h2 {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal
+        }
+
+        .table-style {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal
+        }
+
+        .table-wrap {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            margin: auto;
+        }
+
+        th,
+        td {
+            border: none;
+            padding: 8px;
+        }
+
+        * {
+            color: rgb(114, 146, 136);
+        }
+
+        /* Notification style */
+        .notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            display: none;
+            /* Initially hidden */
+        }
+    </style>
+</head>
+
+<body style="background-color: rgb(255, 255, 255);">
+    <div class="table-wrap">
+        <h1>Schedule Portal</h1>
+        <form action="/add_booking" method="post">
+            <input type="text" name="patient_name" placeholder="Patient Name">
+            <input type="text" name="doctor_name" placeholder="Doctor Name">
+            <input type="date" name="date">
+            <input type="time" name="time">
+            <button type="submit">Schedule</button>
+        </form>
+
+        <h2>Appointments</h2>
+        <table>
+            <tr class="table-style">
+                <th>Patient Name</th>
+                <th>Doctor Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Action</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.patient_name }}</td>
+                <td>{{ booking.doctor_name }}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.time }}</td>
+                <td>
+                    <form action="/update_booking/{{ booking.id }}" method="post"
+                        onsubmit="sendMailNotification(); return false;">
+                        <input type="text" name="patient_name" value="{{ booking.patient_name }}">
+                        <input type="text" name="doctor_name" value="{{ booking.doctor_name }}">
+                        <input type="date" name="date" value="{{ booking.date }}">
+                        <input type="time" name="time" value="{{ booking.time }}">
+                        <button type="submit">mail confirmation</button>
+                    </form>
+                    <form action="/delete_booking/{{ booking.id }}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Notification box -->
+    <div id="notification" class="notification">Mail sent to patient and doctor</div>
+
+    <script>
+        function sendMailNotification() {
+            var notification = document.getElementById("notification");
+            notification.style.display = "block";
+            setTimeout(function () {
+                notification.style.display = "none";
+            }, 3000); // Hide after 3 seconds
+        }
+    </script>
+</body>
+
+</html>

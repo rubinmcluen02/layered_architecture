@@ -1,0 +1,6 @@
+{% if login_success %}
+    <div id="success_message" style="color: green;">Welcome, you've logged in successfully!</div>
+{% endif %}
+<form action="/logout" method="post">
+    <input type="submit" value="Logout">
+</form>

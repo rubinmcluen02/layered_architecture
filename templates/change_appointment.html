@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify Appointment</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <h1>Modify Appointment</h1>
+    <h2>Current Appointment:</h2>
+    <p><strong>Doctor:</strong> {{ appointment.doctor.name }}</p>
+    <p><strong>Date:</strong> {{ appointment.time.strftime('%Y-%m-%d') }}</p>
+    <p><strong>Time:</strong> {{ appointment.time.strftime('%H:%M') }}</p>
+    
+    <h2>Select New Date and Time:</h2>
+    <form action="{{ url_for('change_appointment', appointment_id=appointment.id) }}" method="post">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br>
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required><br>
+        <input type="submit" value="Modify Appointment">
+    </form>
+
+    <a href="{{ url_for('view_appointments') }}">Cancel</a>
+</body>
+</html>
