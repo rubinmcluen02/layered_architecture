@@ -11,11 +11,11 @@
         <h1>Patient Portal</h1>
         <nav>
             <ul>
-                <li><a href="{{ url_for('patient_dashboard') }}">Home</a></li>
-                <li><a href="{{ url_for('book_appointment') }}">Book Appointment</a></li>
-                <li><a href="{{ url_for('update_insurance') }}">Update Insurance</a></li>
-                <li><a href="{{ url_for('view_appointments') }}">View Appointments</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                <li><a href="{{ url_for('auth.patient_dashboard') }}">Home</a></li>
+                <li><a href="{{ url_for('auth.book_appointment') }}">Book Appointment</a></li>
+                <li><a href="{{ url_for('auth.update_insurance') }}">Update Insurance</a></li>
+                <li><a href="{{ url_for('auth.view_appointments') }}">View Appointments</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
             </ul>
         </nav>
     </header>

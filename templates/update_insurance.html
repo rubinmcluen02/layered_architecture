@@ -2,7 +2,7 @@
 {% block title %}Update Insurance Information{% endblock %}
 {% block content %}
     <h2>Update Insurance Information</h2>
-    <form action="{{ url_for('update_insurance') }}" method="post">
+    <form action="{{ url_for('auth.update_insurance') }}" method="post">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" value="{{ insurance.name }}" required>
         <label for="policy_number">Policy Number:</label>

@@ -7,7 +7,7 @@
             <div class="doctor-block">
                 <h3>{{ doctor.name }} - {{ doctor.specialization }}</h3>
                 <p><strong>Address:</strong> {{ doctor.address }}</p>
-                <form action="{{ url_for('book_appointment') }}" method="post">
+                <form action="{{ url_for('auth.book_appointment') }}" method="post">
                     <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
                     <label for="appointment_date">Select Date:</label>
                     <input type="date" id="appointment_date" name="appointment_date" required>
