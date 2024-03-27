@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from extensions import db
+from layers.exceptions import DataStorageError
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,11 +37,14 @@ class Appointment(db.Model):
     doctor = db.relationship('Doctor', backref='appointments', lazy=True)
 
 def get_db_connection():
-    import mysql.connector
-    db_config = {
-        'host': 'localhost',
-        'user': 'root',
-        'password': 'password',
-        'database': 'layered_architecture'
-    }
-    return mysql.connector.connect(**db_config)
+    try:
+        import mysql.connector
+        db_config = {
+            'host': 'localhost',
+            'user': 'root',
+            'password': 'password',
+            'database': 'layered_architecture'
+        }
+        return mysql.connector.connect(**db_config)
+    except Exception as e:
+        raise DataStorageError from e

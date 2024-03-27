@@ -1,6 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for, flash, session
 from flask_login import login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from layers.exceptions import *
+from werkzeug.security import generate_password_hash
 from datetime import datetime
 import urllib.parse
 
@@ -13,17 +14,56 @@ from layers.data_storage import *
 
 auth_blueprint = Blueprint('auth', __name__)
 
+@auth_blueprint.errorhandler(DomainError)
+def handle_domain_error(error):
+    flash("Domain service is currently unavailable. Please try again later.")
+    return redirect(request.url)
+
+@auth_blueprint.errorhandler(DataStorageError)
+def handle_data_storage_error(error):
+    flash("Data storage service is currently unavailable. Please try again later.")
+    return redirect(request.url)
+
+@auth_blueprint.errorhandler(MapperError)
+def handle_mapper_error(error):
+    flash("Mapper service is currently unavailable. Please try again later.")
+    return redirect(request.url)
+
+@auth_blueprint.errorhandler(AuthenticationError)
+def handle_authentication_error(error):
+    flash("Authentication service is currently unavailable. Please try again later.")
+    return redirect(request.url)
+
+@auth_blueprint.errorhandler(ExtractionError)
+def handle_extraction_error(error):
+    flash("Extraction service is currently unavailable. Please try again later.")
+    return redirect(request.url)
+
+@auth_blueprint.errorhandler(ValidationError)
+def handle_validation_error(error):
+    flash("Validation service is currently unavailable. Please try again later.")
+    return redirect(request.url)
+
+@auth_blueprint.errorhandler(AuthorizationError)
+def handle_authorization_error(error):
+    flash("Authorization service is currently unavailable. Please try again later.")
+    return redirect(request.url)
+
+
 @auth_blueprint.route('/patient_login', methods=['GET', 'POST'])
 def patient_login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    try:
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
 
-        if authenticate_and_login(username, password, 'patient'):
-            return redirect(url_for('auth.patient_dashboard'))
-        else:
-            flash('Invalid username or password')
-    return render_template('patient_login.html')
+            if authenticate_and_login(username, password, 'patient'):
+                return redirect(url_for('auth.patient_dashboard'))
+            else:
+                flash('Invalid username or password')
+        return render_template('patient_login.html')
+    except Exception as e:
+        raise AuthorizationError from e
 
 @auth_blueprint.route('/provider_login', methods=['GET', 'POST'])
 def provider_login():
