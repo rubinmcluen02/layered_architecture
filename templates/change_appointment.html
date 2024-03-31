@@ -14,7 +14,7 @@
     <p><strong>Time:</strong> {{ appointment.time.strftime('%H:%M') }}</p>
     
     <h2>Select New Date and Time:</h2>
-    <form action="{{ url_for('change_appointment', appointment_id=appointment.id) }}" method="post">
+    <form action="{{ url_for('auth.change_appointment', appointment_id=appointment.id) }}" method="post">
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" required><br>
         <label for="time">Time:</label>
@@ -22,6 +22,6 @@
         <input type="submit" value="Modify Appointment">
     </form>
 
-    <a href="{{ url_for('view_appointments') }}">Cancel</a>
+    <a href="{{ url_for('auth.view_appointments') }}">Cancel</a>
 </body>
 </html>

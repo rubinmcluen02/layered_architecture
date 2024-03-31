@@ -38,10 +38,31 @@
             width: 80%;
             box-sizing: border-box;
         }
+        .flashes {
+            list-style-type: none;
+            padding: 0;
+        }
+        .flashes li {
+            background-color: #ffcccc;
+            color: #a94442;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <h2>Welcome</h2>
         <a href="/patient_login" class="btn">Patient Login</a>
         <a href="/provider_login" class="btn">Provider Login</a>

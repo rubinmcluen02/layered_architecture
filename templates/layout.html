@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+    .flashes {
+        list-style-type: none;
+        padding: 0;
+    }
+    .flashes li {
+        background-color: #ffcccc;
+        color: #a94442;
+        padding: 10px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        border: 1px solid #f5c6cb;
+    }
+</style>
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
     <header>
         <h1>Patient Portal</h1>
         <nav>
