@@ -211,3 +211,13 @@ class Extraction:
             'out_of_pocket_max': float(form.get('out_of_pocket_max')) if form.get('out_of_pocket_max') else None,
             'covered_services': form.get('covered_services')
         }
+
+    @check_service_status(ExtractionError)
+    def get_appointment_from_db(self, appointment_id):
+        from service_instances import datastorage
+        conn = datastorage.get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM booking WHERE id = %s", (appointment_id,))
+        appointment = cursor.fetchone()
+        cursor.close()
+        return appointment

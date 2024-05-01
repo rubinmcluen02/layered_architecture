@@ -8,7 +8,7 @@ class TestBookingApp(unittest.TestCase):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         if not hasattr(app, 'is_db_initialized'):
             db.init_app(app)
-            app.is_db_initialized = True  # Set a flag to indicate db is initialized
+            app.is_db_initialized = True 
         with app.app_context():
             db.create_all()
 

@@ -16,6 +16,13 @@ password = "password"
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:{password}@localhost/layered_architecture'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+from phase3_services.handle_api_request import init_appointment_routes
+from phase3_services.send_api_request import init_send_request_route
+from phase3_services.store_api_data import store_data
+
+init_appointment_routes(app)
+init_send_request_route(app)
+
 db.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'
